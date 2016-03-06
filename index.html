@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>VideoDirector</title>
+</head>
+<body>
+  <video id="video-player" width="320" height="240" controls>
+    <source src="video.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+  </video>
+</body>
+<script src="videodirector.js"><</script>
+<script>
+var videoDirector = new VideoDirector('video-player');
+
+videoDirector.at('play', function(){
+  console.log('play pressed');
+});
+
+videoDirector.at('pause', function(){
+  console.log('pause pressed');
+});
+
+</script>
+</html>
