@@ -4,6 +4,8 @@
  * @constructor
  */
 function VideoAction(action, func){
+  var noneTimeActions = ['play','pause', 'ended'];
+
   // action value
   this.action = action;
 
@@ -12,6 +14,12 @@ function VideoAction(action, func){
 
   // function to be called
   this.func = func;
+
+  // check if we are dealing with a timed action
+  if(noneTimeActions.indexOf(action) === -1){
+    // parse timing action
+    this.parseTimingAction(action);
+  }
 }
 
 /**
@@ -44,14 +52,18 @@ VideoAction.prototype.executeCallback = function(){
 /**
  * Parse timing action
  * @param  {string} action timing action
+ * @return {boolean} flag to indicate if a time was parsed succesfully
  */
 VideoAction.prototype.parseTimingAction = function(action){
+  var isValid = false;
+
   //
   // {xx}s
   var re = /(.*)s/;
 
   if ((m = re.exec(action)) !== null) {
     this.timingAction = parseInt(m[1]);
+    isValid = true;
   }
 
   //
@@ -60,6 +72,7 @@ VideoAction.prototype.parseTimingAction = function(action){
 
   if ((m = re.exec(action)) !== null) {
     this.timingAction = parseInt(m[1] * 60);
+    isValid = true;
   }
 
   //
@@ -68,6 +81,7 @@ VideoAction.prototype.parseTimingAction = function(action){
 
   if ((m = re.exec(action)) !== null) {
     this.timingAction = parseInt(m[1] * 60) + parseInt(m[2]);
+    isValid = true;
   }
 
   //
@@ -76,10 +90,10 @@ VideoAction.prototype.parseTimingAction = function(action){
 
   if ((m = re.exec(action)) !== null) {
     this.timingAction = parseInt(m[1] * 3600) + parseInt(m[2] * 60) + parseInt(m[3]);
-    console.log(this.timingAction);
+    isValid = true;
   }
 
-
+  return isValid;
 }
 
 /**

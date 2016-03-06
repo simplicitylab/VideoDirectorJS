@@ -107,6 +107,10 @@ QUnit.test('Test VideoActions Parse Time', function(assert) {
 
   videoActionHello.parseTimingAction('1:0:10');
   assert.equal(videoActionHello.getTiming(), 3610, 'Parse timing (1:0:10)');
+
+  // invalid parsing
+  var isValid = videoActionHello.parseTimingAction('invalid');
+  assert.equal(isValid, false, 'Invalid parsing flag');
 });
 
 /**
