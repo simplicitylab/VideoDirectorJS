@@ -18,7 +18,12 @@ function VideoAction(action, func){
   // check if we are dealing with a timed action
   if(noneTimeActions.indexOf(action) === -1){
     // parse timing action
-    this.parseTimingAction(action);
+    var isValid = this.parseTimingAction(action);
+
+    // if we couldn't parse this action
+    if(!isValid){
+      throw "Action is invalid (Correct time format?)";
+    }
   }
 }
 
