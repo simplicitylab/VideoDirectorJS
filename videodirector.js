@@ -8,19 +8,25 @@ function VideoAction(action, func){
   this.func = func;
 }
 
+
 /**
- * Get video action
+ * Get if action is executed
  * @return {string} name of action
  */
 VideoAction.prototype.getAction = function(){
   return this.action;
 }
 
+
 /**
  * Execute callback
  */
 VideoAction.prototype.executeCallback = function(){
-  return this.func.apply();
+  // set executed flag
+  this.isExecuted = true;
+
+  // call function
+  return this.func();
 }
 
 /**
@@ -40,6 +46,7 @@ VideoAction.prototype.isTimingAction = function(){
 function VideoDirector(videoElemId){
   // current time
   this.currentTime = 0;
+  this.prevTime = 0;
 
   // holds our actions
   this.videoActions = [];
@@ -90,11 +97,17 @@ VideoDirector.prototype.setupEvents = function(){
     }
 
     /**
+     * Executed when a video ended
+     */
+    this.videoElem.onended = function(){
+      self.handleEnding();
+    }
+
+    /**
      * Executed when video playing position changed
      */
     this.videoElem.ontimeupdate = function(){
-      // store current Time
-      self.currentTime = self.videoElem.currentTime;
+      self.handleOnTime();
     }
 
   }else{
@@ -115,17 +128,43 @@ VideoDirector.prototype.handlePlay = function(){
   }
 }
 
-
 /**
  * Handle pause action
  */
 VideoDirector.prototype.handlePause = function(){
-  // get all video actions of type play
+  // get all video actions of type pause
   var filteredVideoActions = this.getVideoActionsOfType('pause');
 
   // iterate over video actions
   for(var i = 0, l = filteredVideoActions.length; i<l; i++){
       filteredVideoActions[i].executeCallback();
+  }
+}
+
+/**
+ * Handle ending action
+ */
+VideoDirector.prototype.handleEnding = function(){
+  // get all video actions of type ended
+  var filteredVideoActions = this.getVideoActionsOfType('ended');
+
+  // iterate over video actions
+  for(var i = 0, l = filteredVideoActions.length; i<l; i++){
+      filteredVideoActions[i].executeCallback();
+  }
+}
+
+/**
+ * Handle timing actions
+ */
+VideoDirector.prototype.handleOnTime = function(){
+
+  // be sure we didn't already process this frame
+  if(this.prevTime !== Math.floor(this.videoElem.currentTime)){
+    // store current Time and prev time
+    this.currentTime = Math.floor(this.videoElem.currentTime);
+    this.prevTime = this.currentTime;
+    
   }
 }
 
@@ -147,11 +186,8 @@ VideoDirector.prototype.getVideoActionsOfType = function(actionType){
 
   // iterate over video actions
   for(var i = 0, l = this.getVideoActions().length; i < l; i++){
-      // if we need timing actions
-      if (actionType === "time"){
-
       // if current video action is the type we need
-      }else if(this.getVideoActions()[i].getAction() === actionType){
+      if(this.getVideoActions()[i].getAction() === actionType){
         tempVideoActions.push(this.getVideoActions()[i]);
       };
   }
@@ -160,8 +196,16 @@ VideoDirector.prototype.getVideoActionsOfType = function(actionType){
 }
 
 /**
+ * Get Time related VideoActions
+ * @return {array} list of timing videoactions
+ */
+VideoDirector.prototype.getTimeVideoActions = function(){
+  console.log(this.currentTime);
+}
+
+/**
  * At <action> callback
- * @param  {string}   action that needs to be fullfilld
+ * @param  {string}   action that needs to be fullfilled
  * @param  {Function} callback function to call
  */
 VideoDirector.prototype.at = function(action, callback){
