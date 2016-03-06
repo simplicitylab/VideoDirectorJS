@@ -83,7 +83,7 @@ QUnit.test('Test VideoActions', function(assert) {
 /**
  * Testing VideoActions Parse timing
  */
-QUnit.test('Test VideoActions Parse Time', function(assert) {
+QUnit.test('Test VideoActions parse time', function(assert) {
   // create video action
   var videoActionHello = new VideoAction('10s', function(){});
 
@@ -142,6 +142,13 @@ QUnit.test('Test VideoActions Parse Time', function(assert) {
   // invalid parsing
   var isValid = videoActionHello.parseTimingAction('invalid');
   assert.equal(isValid, false, 'Invalid parsing flag');
+
+  // is timed Action
+  var videoActionHello2 = new VideoAction('10s', function(){});
+  assert.equal(videoActionHello2.getIsTimedAction(), true, 'getIsTimedAction (true)');
+  
+  var videoActionHello3 = new VideoAction('play', function(){});
+  assert.equal(videoActionHello3.getIsTimedAction(), false, 'getIsTimedAction (false)');
 });
 
 /**
