@@ -9,6 +9,9 @@ function VideoAction(action, func){
   // action value
   this.action = action;
 
+  // flag to indicate if this is a timed action
+  this.timedAction = false;
+
   // time action needs to be executed
   this.timingAction = 0;
 
@@ -23,6 +26,8 @@ function VideoAction(action, func){
     // if we couldn't parse this action
     if(!isValid){
       throw "Action is invalid (Correct time format?)";
+    }else{
+      this.timedAction = true;
     }
   }
 }
@@ -33,6 +38,14 @@ function VideoAction(action, func){
  */
 VideoAction.prototype.getAction = function(){
   return this.action;
+}
+
+/**
+ * Get if action is timed action
+ * @return {boolean} flag indicating if this action is a timed action
+ */
+VideoAction.prototype.getIsTimedAction = function(){
+  return this.timedAction;
 }
 
 /**
