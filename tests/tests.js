@@ -50,6 +50,66 @@ QUnit.test('Test VideoActions', function(assert) {
 });
 
 /**
+ * Testing VideoActions Parse timing
+ */
+QUnit.test('Test VideoActions Parse Time', function(assert) {
+  // create video action
+  var videoActionHello = new VideoAction('10s', function(){});
+
+  // test {xx}s structure
+  videoActionHello.parseTimingAction('0s');
+  assert.equal(videoActionHello.getTiming(), 0, 'Parse timing (0s)');
+
+  videoActionHello.parseTimingAction('10s');
+  assert.equal(videoActionHello.getTiming(), 10, 'Parse timing (10s)');
+
+  videoActionHello.parseTimingAction('100s');
+  assert.equal(videoActionHello.getTiming(), 100, 'Parse timing (100s)');
+
+  // test {xx}m structure
+  videoActionHello.parseTimingAction('1m');
+  assert.equal(videoActionHello.getTiming(), 60, 'Parse timing (1m)');
+
+  videoActionHello.parseTimingAction('5m');
+  assert.equal(videoActionHello.getTiming(), 300, 'Parse timing (5m)');
+
+  // test {xx}m {xx}s structure
+  videoActionHello.parseTimingAction('1m30s');
+  assert.equal(videoActionHello.getTiming(), 90, 'Parse timing (1m30s)');
+
+  // test {xx}:{xx}:{xx} structure
+  videoActionHello.parseTimingAction('0:0:30');
+  assert.equal(videoActionHello.getTiming(), 30, 'Parse timing (0:0:30)');
+
+  videoActionHello.parseTimingAction('0:0:4250');
+  assert.equal(videoActionHello.getTiming(), 4250, 'Parse timing (0:0:4250)');
+
+  videoActionHello.parseTimingAction('0:00:30');
+  assert.equal(videoActionHello.getTiming(), 30, 'Parse timing (0:00:30)');
+
+  videoActionHello.parseTimingAction('00:00:40');
+  assert.equal(videoActionHello.getTiming(), 40, 'Parse timing (00:00:40)');
+
+  videoActionHello.parseTimingAction('00:0:32');
+  assert.equal(videoActionHello.getTiming(), 32, 'Parse timing (00:0:32)');
+
+  videoActionHello.parseTimingAction('0:10:00');
+  assert.equal(videoActionHello.getTiming(), 600, 'Parse timing (0:10:00)');
+
+  videoActionHello.parseTimingAction('0:10:0');
+  assert.equal(videoActionHello.getTiming(), 600, 'Parse timing (0:10:0)');
+
+  videoActionHello.parseTimingAction('00:10:0');
+  assert.equal(videoActionHello.getTiming(), 600, 'Parse timing (00:10:0)');
+
+  videoActionHello.parseTimingAction('1:0:0');
+  assert.equal(videoActionHello.getTiming(), 3600, 'Parse timing (1:0:0)');
+
+  videoActionHello.parseTimingAction('1:0:10');
+  assert.equal(videoActionHello.getTiming(), 3610, 'Parse timing (1:0:10)');
+});
+
+/**
  * Testing video actions list
  */
 QUnit.test('Test VideoActions list', function(assert) {

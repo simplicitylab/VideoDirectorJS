@@ -4,10 +4,15 @@
  * @constructor
  */
 function VideoAction(action, func){
+  // action value
   this.action = action;
+
+  // time action needs to be executed
+  this.timingAction = 0;
+
+  // function to be called
   this.func = func;
 }
-
 
 /**
  * Get if action is executed
@@ -17,6 +22,13 @@ VideoAction.prototype.getAction = function(){
   return this.action;
 }
 
+/**
+ * Return timing action
+ * @return {integer} timing (seconds) when the action needs to be triggered
+ */
+VideoAction.prototype.getTiming = function(){
+  return this.timingAction;
+}
 
 /**
  * Execute callback
@@ -30,10 +42,43 @@ VideoAction.prototype.executeCallback = function(){
 }
 
 /**
- * Determine if action is timing action
- * @return {boolean} flag indicating if action is timing action
+ * Parse timing action
+ * @param  {string} action timing action
  */
-VideoAction.prototype.isTimingAction = function(){
+VideoAction.prototype.parseTimingAction = function(action){
+  //
+  // {xx}s
+  var re = /(.*)s/;
+
+  if ((m = re.exec(action)) !== null) {
+    this.timingAction = parseInt(m[1]);
+  }
+
+  //
+  // {xx}m
+  var re = /(.*)m/;
+
+  if ((m = re.exec(action)) !== null) {
+    this.timingAction = parseInt(m[1] * 60);
+  }
+
+  //
+  // {xx}m {xx}s
+  var re = /(.*)m(?:\s*)(.*)s/;
+
+  if ((m = re.exec(action)) !== null) {
+    this.timingAction = parseInt(m[1] * 60) + parseInt(m[2]);
+  }
+
+  //
+  // {xx}:{xx}:{xx}
+  var re = /(.*)\:(.*)\:(.*)/;
+
+  if ((m = re.exec(action)) !== null) {
+    this.timingAction = parseInt(m[1] * 3600) + parseInt(m[2] * 60) + parseInt(m[3]);
+    console.log(this.timingAction);
+  }
+
 
 }
 
@@ -164,7 +209,7 @@ VideoDirector.prototype.handleOnTime = function(){
     // store current Time and prev time
     this.currentTime = Math.floor(this.videoElem.currentTime);
     this.prevTime = this.currentTime;
-    
+
   }
 }
 
