@@ -128,6 +128,9 @@ function VideoDirector(videoElemId){
   // holds our actions
   this.videoActions = [];
 
+  // holds our timed video actions
+  this.timedVideoActions = [];
+
   // holds flag that  video has been initialised
   this.hasVideoInitialised = false;
 
@@ -254,6 +257,14 @@ VideoDirector.prototype.getVideoActions = function(){
 }
 
 /**
+ * Get Time related VideoActions
+ * @return {array} of timed videoactions
+ */
+VideoDirector.prototype.getTimeVideoActions = function(){
+  return this.timedVideoActions;
+}
+
+/**
  * Get video actions of type
  * @param  {string} actionType name of action type
  * @return {array}  list of videoactions of action type
@@ -272,13 +283,6 @@ VideoDirector.prototype.getVideoActionsOfType = function(actionType){
   return tempVideoActions;
 }
 
-/**
- * Get Time related VideoActions
- * @return {array} list of timing videoactions
- */
-VideoDirector.prototype.getTimeVideoActions = function(){
-  console.log(this.currentTime);
-}
 
 /**
  * At <action> callback
@@ -289,6 +293,13 @@ VideoDirector.prototype.at = function(action, callback){
   // create video action
   var videoAction = new VideoAction(action, callback);
 
-  // store in videoactions list
-  this.videoActions.push(videoAction);
+  // when action is a timed action
+  if(videoAction.getIsTimedAction()){
+    // store in our list of timed actions
+    this.timedVideoActions.push(videoAction);
+  } else {
+    // store in videoactions list
+    this.videoActions.push(videoAction);
+  }
+
 }

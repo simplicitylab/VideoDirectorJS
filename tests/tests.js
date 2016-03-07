@@ -48,15 +48,14 @@ QUnit.test('Test VideoDirector VideoActions list', function(assert) {
   director.at('play', function(){});
 
   // test length
-  assert.equal(director.getVideoActions().length, 6, 'Get number of video actions (length)');
+  assert.equal(director.getVideoActions().length, 4, 'Get number of video actions (length)');
+  assert.equal(director.getTimeVideoActions().length, 2, 'Get number of timed video actions (length)');
 
   // get items
   assert.equal(director.getVideoActions()[0].getAction(), 'play', 'Expected action (play)');
   assert.equal(director.getVideoActions()[1].getAction(), 'pause', 'Expected action (pause)');
-  assert.equal(director.getVideoActions()[2].getAction(), '10s', 'Expected action (10s)');
-  assert.equal(director.getVideoActions()[3].getAction(), '10m', 'Expected action (10m)');
-  assert.equal(director.getVideoActions()[4].getAction(), 'play', 'Expected action (play)');
-  assert.equal(director.getVideoActions()[5].getAction(), 'play', 'Expected action (play)');
+  assert.equal(director.getVideoActions()[2].getAction(), 'play', 'Expected action (play)');
+  assert.equal(director.getVideoActions()[3].getAction(), 'play', 'Expected action (play)');
 
   // get videoactions of certain type
   assert.equal(director.getVideoActionsOfType('play').length, 3, 'Get VideoActionOfType (play: 3)');
@@ -146,7 +145,7 @@ QUnit.test('Test VideoActions parse time', function(assert) {
   // is timed Action
   var videoActionHello2 = new VideoAction('10s', function(){});
   assert.equal(videoActionHello2.getIsTimedAction(), true, 'getIsTimedAction (true)');
-  
+
   var videoActionHello3 = new VideoAction('play', function(){});
   assert.equal(videoActionHello3.getIsTimedAction(), false, 'getIsTimedAction (false)');
 });
