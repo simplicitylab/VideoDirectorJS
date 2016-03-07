@@ -245,6 +245,13 @@ VideoDirector.prototype.handleOnTime = function(){
     this.currentTime = Math.floor(this.videoElem.currentTime);
     this.prevTime = this.currentTime;
 
+    // get actions scheduled at this time
+    var filteredVideoActions = this.getTimedVideoActionsOfTime(this.currentTime);
+
+    // iterate over video actions
+    for(var i = 0, l = filteredVideoActions.length; i<l; i++){
+        filteredVideoActions[i].executeCallback();
+    }
   }
 }
 
@@ -260,7 +267,7 @@ VideoDirector.prototype.getVideoActions = function(){
  * Get Time related VideoActions
  * @return {array} of timed videoactions
  */
-VideoDirector.prototype.getTimeVideoActions = function(){
+VideoDirector.prototype.getTimedVideoActions = function(){
   return this.timedVideoActions;
 }
 
@@ -278,6 +285,25 @@ VideoDirector.prototype.getVideoActionsOfType = function(actionType){
       if(this.getVideoActions()[i].getAction() === actionType){
         tempVideoActions.push(this.getVideoActions()[i]);
       };
+  }
+
+  return tempVideoActions;
+}
+
+/**
+ * Get timed video actions of time
+ * @param  {integer} timeSeconds time of actionType
+ * @return {array} list of timed video actions
+ */
+VideoDirector.prototype.getTimedVideoActionsOfTime = function(timeSeconds){
+  var tempVideoActions = [];
+
+  // iterate over video actions
+  for(var i = 0, l = this.getTimedVideoActions().length; i < l; i++){
+    // if the current time has an action scheduled
+    if(this.getTimedVideoActions()[i].timingAction === timeSeconds){
+      tempVideoActions.push(this.getTimedVideoActions()[i]);
+    }
   }
 
   return tempVideoActions;
@@ -301,5 +327,4 @@ VideoDirector.prototype.at = function(action, callback){
     // store in videoactions list
     this.videoActions.push(videoAction);
   }
-
 }

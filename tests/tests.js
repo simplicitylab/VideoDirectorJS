@@ -43,13 +43,14 @@ QUnit.test('Test VideoDirector VideoActions list', function(assert) {
   director.at('play', function(){});
   director.at('pause', function(){});
   director.at('10s', function(){});
+  director.at('10s', function(){});
   director.at('10m', function(){});
   director.at('play', function(){});
   director.at('play', function(){});
 
   // test length
   assert.equal(director.getVideoActions().length, 4, 'Get number of video actions (length)');
-  assert.equal(director.getTimeVideoActions().length, 2, 'Get number of timed video actions (length)');
+  assert.equal(director.getTimedVideoActions().length, 3, 'Get number of timed video actions (length)');
 
   // get items
   assert.equal(director.getVideoActions()[0].getAction(), 'play', 'Expected action (play)');
@@ -60,6 +61,8 @@ QUnit.test('Test VideoDirector VideoActions list', function(assert) {
   // get videoactions of certain type
   assert.equal(director.getVideoActionsOfType('play').length, 3, 'Get VideoActionOfType (play: 3)');
 
+  // get videoactions of certain time
+  assert.equal(director.getTimedVideoActionsOfTime(10).length, 2, 'Get getTimedVideoActionsOfTime (10s)');
 });
 
 /**

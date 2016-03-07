@@ -26,5 +26,30 @@ videoDirector.at('ended', function(){
   console.log('movie ended');
 });
 
+videoDirector.at('2s', function(){
+  console.log('2s');
+});
+
+videoDirector.at('5s', function(){
+  console.log('5s');
+});
+
+videoDirector.at('5s', function(){
+  console.log('5s (2x)');
+});
+
+videoDirector.at('5s', function(){
+  console.log('5s (3x)');
+});
+
+videoDirector.at('0:0:15', function(){
+  console.log('15s');
+});
+
+videoDirector.at('1m', function(){
+  console.log('1m');
+});
+
+
 </script>
 </html>
