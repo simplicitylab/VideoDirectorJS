@@ -44,4 +44,14 @@ videoDirector.at('00:00:15', function(){
   console.log('Executed at 00:00:15');
 });
 
+// callback will be executed when video position is at 00:01:00
+videoDirector.at('1m', function(){
+  console.log('Executed at 00:01:00');
+});
+
+// callback will be executed when video position is at 00:01:00
+videoDirector.at('00:01:00', function(){
+  console.log('Executed at 00:01:00');
+});
+
 ```
