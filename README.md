@@ -1,5 +1,8 @@
 # VideoDirectorJS
 
+VideoDirectJS is a javascript library that makes it possible to link video events/timing to your own (custom) callbacks.
+
+
 ## Usage
 
 ### Initialisation
