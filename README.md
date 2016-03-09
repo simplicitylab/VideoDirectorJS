@@ -4,7 +4,7 @@ VideoDirectJS is a javascript library that makes it possible to link video event
 
 ## Loading support
 
-* Classic loading. Loading through script src, objects accessible through JSCardDealer namespace.
+* Classic loading. Loading through script src, objects accessible through VideoDirectJS namespace.
 * AMD/Require.JS
 
 ## Usage
