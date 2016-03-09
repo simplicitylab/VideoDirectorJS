@@ -2,6 +2,11 @@
 
 VideoDirectJS is a javascript library that makes it possible to link video events/timing to your own (custom) callbacks.
 
+## Loading support
+
+* Classic loading. Loading through script src, objects accessible through JSCardDealer namespace.
+* AMD/Require.JS
+
 ## Usage
 
 ### Initialisation
@@ -15,7 +20,7 @@ VideoDirectJS is a javascript library that makes it possible to link video event
 ```
 
 ```javascript
-var videoDirector = new VideoDirector('video-player');
+var videoDirector = new VideoDirectorJS.Director('video-player');
 ```
 
 ### Schedule event

@@ -13,7 +13,7 @@
 </body>
 <script src="../videodirector.js"><</script>
 <script>
-var videoDirector = new VideoDirector('video-player');
+var videoDirector = new VideoDirectorJS.Director('video-player');
 
 videoDirector.at('play', function(){
   console.log('play pressed');
@@ -24,7 +24,7 @@ videoDirector.at('pause', function(){
   console.log('pause pressed');
   document.getElementById('info').innerHTML = 'Info: pause pressed';
 });
- 
+
 videoDirector.at('2s', function(){
   console.log('2s');
   document.getElementById('info').innerHTML = 'Info: 2s';
