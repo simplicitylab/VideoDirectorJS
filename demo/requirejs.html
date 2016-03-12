@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>VideoDirectorJS: requirejs</title>
+	</head>
+	<body>
+    <video id="video-player" width="320" height="240" controls>
+      <source src="video.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+    </video>
+    <h2 id="info">Info:</h2>
+	</body>
+	<script src="../thirdparty/require.js"></script>
+	<script>
+		requirejs(['../videodirector'], function(VideoDirectorJS){
+      var videoDirector = new VideoDirectorJS.Director('video-player');
+
+      videoDirector.at('play', function(){
+        console.log('play pressed');
+        document.getElementById('info').innerHTML = 'Info: play pressed';
+      });
+
+      videoDirector.at('playing', function(){
+        console.log('playing');
+        document.getElementById('info').innerHTML = 'Info: playing';
+      });
+
+      videoDirector.at('canplay', function(){
+        console.log('video can play');
+        document.getElementById('info').innerHTML = 'Info: video can play';
+      });
+
+      videoDirector.at('volumechange', function(){
+        console.log('video volume changed');
+        document.getElementById('info').innerHTML = 'Info: video volume changed';
+      });
+
+      videoDirector.at('pause', function(){
+        console.log('pause pressed');
+        document.getElementById('info').innerHTML = 'Info: pause pressed';
+      });
+
+      videoDirector.at('2s', function(){
+        console.log('2s');
+        document.getElementById('info').innerHTML = 'Info: 2s';
+        videoDirector.muteVideo();
+      });
+
+      videoDirector.at('5s', function(){
+        console.log('5s');
+        document.getElementById('info').innerHTML = 'Info: 5s';
+        videoDirector.muteVideo();
+      });
+
+      videoDirector.at('10s', function(){
+        console.log('10s');
+        document.getElementById('info').innerHTML = 'Info: 10s';
+        videoDirector.setVolume(50);
+      });
+
+
+      videoDirector.at('0:0:15', function(){
+        console.log('15s');
+        document.getElementById('info').innerHTML = 'Info: 15s';
+      });
+  });
+	</script>
+
+</html>
