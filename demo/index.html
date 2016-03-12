@@ -6,7 +6,7 @@
 </head>
 <body>
   <video id="video-player" width="320" height="240" controls>
-    <source src="video.mp4" type="video/mp4">
+    <source src="video2.mp4" type="video/mp4">
   Your browser does not support the video tag.
   </video>
   <h2 id="info">Info:</h2>
@@ -43,11 +43,13 @@ videoDirector.at('pause', function(){
 videoDirector.at('2s', function(){
   console.log('2s');
   document.getElementById('info').innerHTML = 'Info: 2s';
+  videoDirector.muteVideo();
 });
 
 videoDirector.at('5s', function(){
   console.log('5s');
   document.getElementById('info').innerHTML = 'Info: 5s';
+  videoDirector.muteVideo();
 });
 
 videoDirector.at('10s', function(){
@@ -59,26 +61,6 @@ videoDirector.at('10s', function(){
 videoDirector.at('0:0:15', function(){
   console.log('15s');
   document.getElementById('info').innerHTML = 'Info: 15s';
-});
-
-videoDirector.at('0:0:25', function(){
-  console.log('25s');
-  document.getElementById('info').innerHTML = 'Info: 25s';
-});
-
-videoDirector.at('0:0:30', function(){
-  console.log('30s');
-  document.getElementById('info').innerHTML = 'Info: 30s';
-});
-
-videoDirector.at('40s', function(){
-  console.log('40s');
-  document.getElementById('info').innerHTML = 'Info: 40s';
-});
-
-videoDirector.at('00:01:00', function(){
-  console.log('1m');
-  document.getElementById('info').innerHTML = 'Info: 1m';
 });
 
 

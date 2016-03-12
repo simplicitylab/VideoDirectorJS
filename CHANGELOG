@@ -3,3 +3,8 @@ v1.1.0
 - refactored code
 - fixed tests
 - added events: canplay, playing, volumechange
+
+v1.2.0
+
+- added get current time
+- add method to mute video

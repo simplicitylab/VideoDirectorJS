@@ -339,6 +339,26 @@
   }
 
   /**
+   * Mute video
+   */
+  Director.prototype.muteVideo = function(){
+    if (this.videoElem.muted){
+      this.videoElem.muted = false;
+    }else{
+      this.videoElem.muted = true;
+    }
+  }
+
+  /**
+   * Get current time
+   * @return {integer} current position video (in seconds)
+   */
+  Director.prototype.getCurrentTime = function(){
+    return this.currentTime;
+  }
+
+
+  /**
    * At <action> callback
    * @param  {string}   action that needs to be fullfilled
    * @param  {Function} callback function to call
@@ -356,6 +376,8 @@
       this.videoActions.push(videoAction);
     }
   }
+
+
 
   VideoDirectorJS.Director = Director;
   VideoDirectorJS.VideoAction = VideoAction;
