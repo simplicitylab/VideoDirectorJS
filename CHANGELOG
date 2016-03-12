@@ -1,0 +1,5 @@
+v1.1
+
+- refactored code
+- fixed tests
+- added events: canplay, playing, volumechange

@@ -22,7 +22,7 @@
    * @constructor
    */
   function VideoAction(action, func){
-    var noneTimeActions = ['play','pause', 'ended'];
+    var noneTimeActions = ['play', 'playing', 'pause', 'ended', 'canplay', 'volumechange'];
 
     // action value
     this.action = action;
@@ -185,21 +185,42 @@
        * Executed when a video starts to play
        */
       this.videoElem.onplay = function(){
-        self.handlePlay();
+        self.handleVideoEvent('play');
+      }
+
+      /**
+       * Executed when a video starts to play after having been paused or stopped for buffering
+       */
+      this.videoElem.onplaying = function(){
+        self.handleVideoEvent('playing');
       }
 
       /**
        * Executed when a video pauses
        */
       this.videoElem.onpause = function(){
-        self.handlePause();
+        self.handleVideoEvent('pause');
       }
 
       /**
        * Executed when a video ended
        */
       this.videoElem.onended = function(){
-        self.handleEnding();
+        self.handleVideoEvent('ended');
+      }
+
+      /**
+       * Executed when the browser can start playing the movie
+       */
+      this.videoElem.oncanplay = function(){
+        self.handleVideoEvent('canplay');
+      }
+
+      /**
+       * Executed when the audio volume of a video has changed
+       */
+      this.videoElem.onvolumechange = function(){
+        self.handleVideoEvent('volumechange');
       }
 
       /**
@@ -215,37 +236,12 @@
   }
 
   /**
-   * Handle play action
+   * Handle video eventName
+   * @param  {string} eventName name of the event
    */
-  Director.prototype.handlePlay = function(){
+  Director.prototype.handleVideoEvent = function(eventName){
     // get all video actions of type play
-    var filteredVideoActions = this.getVideoActionsOfType('play');
-
-    // iterate over video actions
-    for(var i = 0, l = filteredVideoActions.length; i<l; i++){
-        filteredVideoActions[i].executeCallback();
-    }
-  }
-
-  /**
-   * Handle pause action
-   */
-  Director.prototype.handlePause = function(){
-    // get all video actions of type pause
-    var filteredVideoActions = this.getVideoActionsOfType('pause');
-
-    // iterate over video actions
-    for(var i = 0, l = filteredVideoActions.length; i<l; i++){
-        filteredVideoActions[i].executeCallback();
-    }
-  }
-
-  /**
-   * Handle ending action
-   */
-  Director.prototype.handleEnding = function(){
-    // get all video actions of type ended
-    var filteredVideoActions = this.getVideoActionsOfType('ended');
+    var filteredVideoActions = this.getVideoActionsOfType(eventName);
 
     // iterate over video actions
     for(var i = 0, l = filteredVideoActions.length; i<l; i++){

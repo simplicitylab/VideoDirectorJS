@@ -6,7 +6,7 @@ QUnit.test('Test VideoDirector exceptions', function(assert) {
   // None element passed
   assert.throws(
     function(){
-      new VideoDirector('none-element')
+      new VideoDirectorJS.Director('none-element')
     }, 'No element found with this id',
     'None element passed'
   );
@@ -15,7 +15,7 @@ QUnit.test('Test VideoDirector exceptions', function(assert) {
   // Wrong element passed
   assert.throws(
     function(){
-      new VideoDirector('test-element1');
+      new VideoDirectorJS.Director('test-element1');
     }, 'Element is not a <video> element',
     'Wrong element passed'
   );
@@ -24,7 +24,7 @@ QUnit.test('Test VideoDirector exceptions', function(assert) {
   // Video hasn't initialised
   assert.throws(
     function(){
-      var director =  new VideoDirector('video-player');
+      var director =  new  VideoDirectorJS.Director('video-player');
       director.hasVideoInitialised = false;
       director.setupEvents();
     }, 'Video hasn\'t initialised',
@@ -37,7 +37,7 @@ QUnit.test('Test VideoDirector exceptions', function(assert) {
  */
 QUnit.test('Test VideoDirector VideoActions list', function(assert) {
   // init video director
-  var director =  new VideoDirector('video-player');
+  var director =  new  VideoDirectorJS.Director('video-player');
 
   // schedule new action
   director.at('play', function(){});
@@ -71,7 +71,7 @@ QUnit.test('Test VideoDirector VideoActions list', function(assert) {
 QUnit.test('Test VideoActions', function(assert) {
 
   // create new video action
-  var videoActionHello = new VideoAction('play', function(){
+  var videoActionHello = new  VideoDirectorJS.VideoAction('play', function(){
     return 'hello world'
   });
 
@@ -87,7 +87,7 @@ QUnit.test('Test VideoActions', function(assert) {
  */
 QUnit.test('Test VideoActions parse time', function(assert) {
   // create video action
-  var videoActionHello = new VideoAction('10s', function(){});
+  var videoActionHello = new  VideoDirectorJS.VideoAction('10s', function(){});
 
   // test {xx}s structure
   videoActionHello.parseTimingAction('0s');
@@ -146,10 +146,10 @@ QUnit.test('Test VideoActions parse time', function(assert) {
   assert.equal(isValid, false, 'Invalid parsing flag');
 
   // is timed Action
-  var videoActionHello2 = new VideoAction('10s', function(){});
+  var videoActionHello2 = new VideoDirectorJS.VideoAction('10s', function(){});
   assert.equal(videoActionHello2.getIsTimedAction(), true, 'getIsTimedAction (true)');
 
-  var videoActionHello3 = new VideoAction('play', function(){});
+  var videoActionHello3 = new VideoDirectorJS.VideoAction('play', function(){});
   assert.equal(videoActionHello3.getIsTimedAction(), false, 'getIsTimedAction (false)');
 });
 
@@ -161,7 +161,7 @@ QUnit.test('Test VideoActions exceptions', function(assert) {
   // Invalid timed action
   assert.throws(
     function(){
-      new VideoAction('invalid action', function(){});
+      new VideoDirectorJS.VideoAction('invalid action', function(){});
     }, 'Action is invalid (Correct time format?)',
     'Invalid timed action passed'
   );
