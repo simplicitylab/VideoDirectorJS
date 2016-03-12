@@ -153,3 +153,8 @@ Passed to the **at** method
 | volumechange 		| Executed when the audio volume of a video has changed                                             |
 | seeking     		| Executed when the user starts moving/skipping to a new position in the video                      |
 | seeked      		| Executed when the user is finished moving/skipping to a new position in the video                 |
+
+
+## License
+
+GNU LESSER GENERAL PUBLIC LICENSE Version 2.1 (LGPL v2.1)
