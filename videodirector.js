@@ -22,7 +22,11 @@
    * @constructor
    */
   function VideoAction(action, func){
-    var noneTimeActions = ['play', 'playing', 'pause', 'ended', 'canplay', 'volumechange'];
+    var noneTimeActions = [
+      'play', 'playing', 'pause', 'ended',
+      'canplay', 'volumechange','seeked',
+      'seeking'
+    ];
 
     // action value
     this.action = action;
@@ -221,6 +225,20 @@
        */
       this.videoElem.onvolumechange = function(){
         self.handleVideoEvent('volumechange');
+      }
+
+      /**
+       * Executed when the user starts moving/skipping to a new position in the video
+       */
+      this.videoElem.onseeking = function(){
+        self.handleVideoEvent('seeking');
+      }
+
+      /**
+       * Executed when the user is finished moving/skipping to a new position in the video
+       */
+      this.videoElem.onseeked = function(){
+        self.handleVideoEvent('seeked');
       }
 
       /**

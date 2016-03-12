@@ -8,3 +8,5 @@ v1.2.0
 
 - added get current time
 - add method to mute video
+- add method to set volume
+- added events: seeked, seeking
