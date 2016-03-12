@@ -350,6 +350,22 @@
   }
 
   /**
+   * Set video volume
+   * @param  {integer} volume range [0 -100]
+   */
+  Director.prototype.setVolume = function(volume){
+    var volumeVal = 0;
+
+    if(volume > 100){
+      volumeVal = 100;
+    }else{
+      volumeVal = volume / 100;
+    }
+
+    this.videoElem.volume = volumeVal;
+  }
+
+  /**
    * Get current time
    * @return {integer} current position video (in seconds)
    */
