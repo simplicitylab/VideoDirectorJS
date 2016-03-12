@@ -30,6 +30,10 @@ videoDirector.at('canplay', function(){
   document.getElementById('info').innerHTML = 'Info: video can play';
 });
 
+videoDirector.at('volumechange', function(){
+  console.log('video volume changed');
+  document.getElementById('info').innerHTML = 'Info: video volume changed';
+});
 
 videoDirector.at('pause', function(){
   console.log('pause pressed');
